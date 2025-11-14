@@ -1,0 +1,34 @@
+package ExecutorService;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+public class SingleThreadEx {
+    public static void main(String[] args) {
+
+        ExecutorService service = Executors.newSingleThreadExecutor();
+        for(int i = 0 ; i < 5 ; i++){
+            service.execute(new Task(i));
+        }
+
+    }
+}
+
+class Task implements Runnable{
+    private final int taskId;
+
+    Task(int taskId) {
+        this.taskId = taskId;
+    }
+
+    @Override
+    public void run() {
+
+        System.out.println("task with id  " + taskId + "Being executed by thread//// " + Thread.currentThread().getName());
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+}
